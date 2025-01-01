@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -34,4 +36,15 @@ public class UserController {
 
 
     }
+
+    @PostMapping("/login")
+    public HttpStatus loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+        Optional<Users> user = userRepo.findByEmail(email);
+
+        if (user.isPresent() && user.get().getPassword().equals(password)) {
+            return HttpStatus.OK; // Login successful
+        }
+        return HttpStatus.UNAUTHORIZED; // Invalid credentials
+    }
+
 }
