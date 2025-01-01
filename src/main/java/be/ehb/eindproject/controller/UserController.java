@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -25,16 +26,15 @@ public class UserController {
     }
 
     @PostMapping("")
-    public HttpStatus createUser(@RequestParam("user") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
+    public RedirectView createUser(@RequestParam("user") String name, @RequestParam("password") String password, @RequestParam("email") String email) {
 
         Users newUser = new Users();
         newUser.setName(name);
         newUser.setPassword(password);
         newUser.setEmail(email);
         userRepo.save(newUser);
-        return HttpStatus.OK;
 
-
+        return new RedirectView("/login"); // Redirect to the login page
     }
 
     @PostMapping("/login")
