@@ -1,9 +1,6 @@
 package be.ehb.eindproject.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -15,6 +12,7 @@ public class Toestellen {
     private String name;
     private String category;
     private String uitleg;
+    @Column(columnDefinition = "text")
     private String image;
 
     public Toestellen() {
@@ -44,13 +42,6 @@ public class Toestellen {
         this.uitleg = uitleg;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public String getCategory() {
         return category;
@@ -58,5 +49,13 @@ public class Toestellen {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
