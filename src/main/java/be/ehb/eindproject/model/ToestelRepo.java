@@ -7,5 +7,5 @@ import java.util.List;
 public interface ToestelRepo extends CrudRepository<Toestellen, Long> {
 
     //hibernate queries with functionnames
-    List<Toestellen> findAllByCategory(String audio);
+    List<Toestellen> findAllByCategory(String category);
 }

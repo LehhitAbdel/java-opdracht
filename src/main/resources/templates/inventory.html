@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+<h2 style="color: #333;">Inventory</h2>
+
+<!-- Category Filter -->
+<form action="/inventory" method="get" style="margin-bottom: 20px;">
+    <label for="category" style="margin-right: 10px;">Filter by Category:</label>
+    <select id="category" name="category" style="padding: 5px;">
+        <option value="" th:selected="${selectedCategory == null || selectedCategory == ''}">All</option>
+        <option value="audio" th:selected="${selectedCategory == 'audio'}">Audio</option>
+        <option value="light" th:selected="${selectedCategory == 'light'}">Light</option>
+        <option value="podium" th:selected="${selectedCategory == 'podium'}">Podium</option>
+    </select>
+    <button type="submit" style="padding: 5px 10px; margin-left: 10px;">Filter</button>
+</form>
+
+<table style="width: 100%; border-collapse: collapse;">
+    <thead>
+    <tr style="background-color: #007bff; color: white; text-align: left;">
+        <th style="padding: 8px; border: 1px solid #ddd;">ID</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Name</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Category</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Description</th>
+        <th style="padding: 8px; border: 1px solid #ddd;">Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="toestel : ${toestellen}">
+        <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.id}"></td>
+        <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.name}"></td>
+        <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.category}"></td>
+        <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.uitleg}"></td>
+        <td style="padding: 8px; border: 1px solid #ddd;">
+            <img th:src="${toestel.image}" alt="Image" style="max-width: 100px;"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
