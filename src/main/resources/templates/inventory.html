@@ -7,6 +7,18 @@
 </head>
 <body style="font-family: Arial, sans-serif; margin: 20px;">
 
+<nav style="background-color: #007bff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
+    <!-- Logo -->
+    <div style="font-size: 1.5em; font-weight: bold;">MyApp</div>
+
+
+    <div style="display: flex; gap: 20px;">
+        <a href="/login" style="text-decoration: none; color: white; font-size: 1em;">Login</a>
+        <a href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
+        <a href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
+    </div>
+</nav>
+
 <h2 style="color: #333;">Inventory</h2>
 
 <!-- Category Filter -->
@@ -24,7 +36,6 @@
 <table style="width: 100%; border-collapse: collapse;">
     <thead>
     <tr style="background-color: #007bff; color: white; text-align: left;">
-        <th style="padding: 8px; border: 1px solid #ddd;">ID</th>
         <th style="padding: 8px; border: 1px solid #ddd;">Name</th>
         <th style="padding: 8px; border: 1px solid #ddd;">Category</th>
         <th style="padding: 8px; border: 1px solid #ddd;">Description</th>
@@ -33,12 +44,15 @@
     </thead>
     <tbody>
     <tr th:each="toestel : ${toestellen}">
-        <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.id}"></td>
         <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.name}"></td>
         <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.category}"></td>
         <td style="padding: 8px; border: 1px solid #ddd;" th:text="${toestel.uitleg}"></td>
         <td style="padding: 8px; border: 1px solid #ddd;">
             <img th:src="${toestel.image}" alt="Image" style="max-width: 100px;"/>
+            <form action="/addToBasket" method="POST">
+                <input type="hidden" name="name" th:value="${toestel.name}" />
+                <button type="submit" style="padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 4px;">Add to Basket</button>
+            </form>
         </td>
     </tr>
     </tbody>

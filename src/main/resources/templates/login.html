@@ -7,6 +7,19 @@
 </head>
 <body style="font-family: Arial, sans-serif; margin: 20px;">
 
+
+<nav style="background-color: #007bff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
+    <!-- Logo -->
+    <div style="font-size: 1.5em; font-weight: bold;">MyApp</div>
+
+    <!-- Navigation Links -->
+    <div style="display: flex; gap: 20px;">
+        <a href="/login" style="text-decoration: none; color: white; font-size: 1em;">Login</a>
+        <a href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
+        <a href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
+    </div>
+</nav>
+
 <h2 style="color: #333;">Login</h2>
 <form action="/user/login" method="POST" style="width: 300px; border: 1px solid #ccc; padding: 20px; border-radius: 5px;">
     <label for="email" style="display: block; margin-bottom: 8px;">Email:</label>

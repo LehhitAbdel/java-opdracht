@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basket</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+<nav style="background-color: #007bff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
+    <!-- Logo -->
+    <div style="font-size: 1.5em; font-weight: bold;">MyApp</div>
+
+    <!-- Navigation Links -->
+    <div style="display: flex; gap: 20px;">
+        <a href="/login" style="text-decoration: none; color: white; font-size: 1em;">Login</a>
+        <a href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
+        <a href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
+    </div>
+</nav>
+
+<h2 style="color: #333;">Basket</h2>
+
+<ul>
+    <li th:each="item : ${basketItems}" th:text="${item.name}"></li>
+</ul>
+
+<a href="/inventory" style="text-decoration: none; color: #007bff;">Back to Inventory</a>
+
+</body>
+</html>
