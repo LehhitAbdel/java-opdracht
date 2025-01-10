@@ -7,10 +7,12 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Basket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name; // to store the name of toestel
+    private String name;
+    private boolean reserved = false; // New field to track reservation status
 
     public Basket() {}
 
@@ -18,6 +20,7 @@ public class Basket {
         this.name = name;
     }
 
+    // Getters and Setters
     public long getId() {
         return id;
     }
@@ -32,5 +35,13 @@ public class Basket {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isReserved() {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 }

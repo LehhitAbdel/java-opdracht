@@ -12,7 +12,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/login", "/inventory", "/basket", "/addToBasket", "/user/**").permitAll()
+                        .requestMatchers("/register", "/login", "/inventory", "/basket", "/addToBasket", "/basket/reserve", "/user/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()) // Disable CSRF protection for form submissions

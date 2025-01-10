@@ -65,6 +65,21 @@ public class PageController {
         return "redirect:/basket";
     }
 
+    @GetMapping("/basket/reserve")
+    public String reserveBasketItems() {
+        List<Basket> basketList = (List<Basket>) basketRepo.findAll();
+
+        // Mark only unreserved items as reserved
+        for (Basket basketItem : basketList) {
+            if (!basketItem.isReserved()) {
+                basketItem.setReserved(true);
+                basketRepo.save(basketItem);
+            }
+        }
+
+        return "redirect:/basket";
+    }
+
 
 
 }
