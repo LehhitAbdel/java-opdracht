@@ -1,9 +1,8 @@
 package be.ehb.eindproject.controller;
 
-import be.ehb.eindproject.model.Basket;
-import be.ehb.eindproject.model.BasketRepo;
-import be.ehb.eindproject.model.ToestelRepo;
-import be.ehb.eindproject.model.Toestellen;
+import be.ehb.eindproject.model.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,15 +34,33 @@ public class PageController {
         this.toestelRepo = toestelRepo;
         this.basketRepo = basketRepo;
     }
+    private void addLoggedInUserToModel(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Users user = (Users) session.getAttribute("user");
+            if (user != null) {
+                model.addAttribute("username", user.getName());
+            }
+        }
+    }
+
 
     @GetMapping("/inventory")
-    public String showInventoryPage(@RequestParam(required = false) String category, Model model) {
-        List<Toestellen> toestellenList;
+    public String showInventoryPage(@RequestParam(required = false) String category, Model model, HttpServletRequest request) {
+        // Access the logged-in user from the session
+        HttpSession session = request.getSession(false); // Don't create a new session if it doesn't exist
+        Users user = (Users) session.getAttribute("user");
 
+        if (user != null) {
+            model.addAttribute("username", user.getName());
+        }
+
+        // Fetch toestellen by category if provided
+        List<Toestellen> toestellenList;
         if (category != null && !category.isEmpty()) {
-            toestellenList = toestelRepo.findAllByCategory(category); // Fetch by category
+            toestellenList = toestelRepo.findAllByCategory(category);
         } else {
-            toestellenList = (List<Toestellen>) toestelRepo.findAll(); // Fetch all
+            toestellenList = (List<Toestellen>) toestelRepo.findAll();
         }
 
         model.addAttribute("toestellen", toestellenList);
@@ -51,8 +68,17 @@ public class PageController {
         return "inventory";
     }
 
+
     @GetMapping("/basket")
-    public String showBasketPage(Model model) {
+    public String showBasketPage(HttpServletRequest request, Model model) {
+        // Access the logged-in user from the session
+        HttpSession session = request.getSession(false); // Don't create a new session if it doesn't exist
+        Users user = (Users) session.getAttribute("user");
+
+        if (user != null) {
+            model.addAttribute("username", user.getName());
+        }
+
         List<Basket> basketList = (List<Basket>) basketRepo.findAll();
         model.addAttribute("basketItems", basketList);
         return "basket";

@@ -2,6 +2,7 @@ package be.ehb.eindproject.controller;
 
 import be.ehb.eindproject.model.UserRepo;
 import be.ehb.eindproject.model.Users;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
@@ -39,10 +41,15 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public RedirectView loginUser(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public RedirectView loginUser(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletRequest request) {
         Optional<Users> user = userRepo.findByEmail(email);
 
         if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
+            // Store the user in the session
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user.get());
+
+            // Redirect to the basket page after login
             return new RedirectView("/inventory");
         }
 

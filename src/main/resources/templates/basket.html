@@ -22,38 +22,39 @@
 </head>
 <body style="font-family: Arial, sans-serif; margin: 20px;">
 <nav style="background-color: #007bff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
-    <!-- Logo -->
     <div style="font-size: 1.5em; font-weight: bold;">MyApp</div>
-
-    <!-- Navigation Links -->
     <div style="display: flex; gap: 20px;">
-        <a href="/login" style="text-decoration: none; color: white; font-size: 1em;">Login</a>
-        <a href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
-        <a href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
+        <!-- Show "Login" and "Register" links if the user is not logged in -->
+        <a th:if="${username == null}" href="/login" style="text-decoration: none; color: white; font-size: 1em;">Login</a>
+        <a th:if="${username == null}" href="/register" style="text-decoration: none; color: white; font-size: 1em;">Register</a>
+
+        <!-- Show "Basket", "Inventory", and "Profile" links if the user is logged in -->
+        <a th:if="${username != null}" href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
+        <a th:if="${username != null}" href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
     </div>
 </nav>
 
-<!-- Basket Section for Unreserved Items -->
+
+
+<!-- Display the logged-in user's name -->
+<h2>Welcome, <span th:text="${username}"></span>!</h2>
+
 <h2>Basket</h2>
 <ul>
     <li th:each="item : ${basketItems}" th:if="${!item.reserved}" th:text="${item.name}"></li>
 </ul>
 
-<!-- Reserve Button (only if there are unreserved items) -->
 <button th:if="${basketItems.?[!reserved].size() > 0}" onclick="confirmReservation()" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; margin-top: 20px;">Reserve</button>
 
-<!-- Reserved Toestellen Section -->
 <h2 th:if="${basketItems.?[reserved].size() > 0}" style="color: green; margin-top: 40px;">Reserved Toestellen:</h2>
 <ul>
     <li th:each="item : ${basketItems}" th:if="${item.reserved}" th:text="${item.name}"></li>
 </ul>
 
-<!-- Link back to Inventory -->
 <div style="margin-top: 20px;">
     <a href="/inventory" style="text-decoration: none; color: #007bff;">Back to Inventory</a>
 </div>
 
-<!-- JavaScript for confirmation popup -->
 <script>
     function confirmReservation() {
         if (confirm("Are you sure you want to reserve the toestellen in your basket?")) {
