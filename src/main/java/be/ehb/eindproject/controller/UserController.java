@@ -40,19 +40,5 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
-    public RedirectView loginUser(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletRequest request) {
-        Optional<Users> user = userRepo.findByEmail(email);
 
-        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-            // Store the user in the session
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user.get());
-
-            // Redirect to the basket page after login
-            return new RedirectView("/inventory");
-        }
-
-        return new RedirectView("/login?error=true");
-    }
 }

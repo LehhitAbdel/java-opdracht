@@ -4,6 +4,8 @@ import be.ehb.eindproject.model.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,16 +48,15 @@ public class PageController {
 
 
     @GetMapping("/inventory")
-    public String showInventoryPage(@RequestParam(required = false) String category, Model model, HttpServletRequest request) {
-        // Access the logged-in user from the session
-        HttpSession session = request.getSession(false); // Don't create a new session if it doesn't exist
-        Users user = (Users) session.getAttribute("user");
+    public String showInventoryPage(@RequestParam(required = false) String category, Model model) {
+        // Get the logged-in user's details from the Spring Security context
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (user != null) {
-            model.addAttribute("username", user.getName());
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            model.addAttribute("username", username);
         }
 
-        // Fetch toestellen by category if provided
         List<Toestellen> toestellenList;
         if (category != null && !category.isEmpty()) {
             toestellenList = toestelRepo.findAllByCategory(category);
@@ -69,20 +70,22 @@ public class PageController {
     }
 
 
-    @GetMapping("/basket")
-    public String showBasketPage(HttpServletRequest request, Model model) {
-        // Access the logged-in user from the session
-        HttpSession session = request.getSession(false); // Don't create a new session if it doesn't exist
-        Users user = (Users) session.getAttribute("user");
 
-        if (user != null) {
-            model.addAttribute("username", user.getName());
+    @GetMapping("/basket")
+    public String showBasketPage(Model model) {
+        // Get the logged-in user's details from the Spring Security context
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName(); // Get the logged-in user's username
+            model.addAttribute("username", username);
         }
 
         List<Basket> basketList = (List<Basket>) basketRepo.findAll();
         model.addAttribute("basketItems", basketList);
         return "basket";
     }
+
 
     @PostMapping("/addToBasket")
     public String addToBasket(@RequestParam("name") String name) {
