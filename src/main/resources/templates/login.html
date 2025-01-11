@@ -18,6 +18,8 @@
         <!-- Show "Basket", "Inventory", and "Profile" links if the user is logged in -->
         <a th:if="${username != null}" href="/basket" style="text-decoration: none; color: white; font-size: 1em;">Basket</a>
         <a th:if="${username != null}" href="/inventory" style="text-decoration: none; color: white; font-size: 1em;">Inventory</a>
+        <a th:if="${username != null}" href="/logout" style="text-decoration: none; color: white; font-size: 1em;">Logout</a>
+
     </div>
 </nav>
 
