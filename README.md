@@ -16,7 +16,7 @@ This project is a Spring-based web application developed in IntelliJ IDEA. The w
 
 ## Project Documentation
 
-Detailed documentation and project workflows can be found on our [GitHub Wiki](https://github.com/LehhitAbdel/java-opdracht/wiki).
+Detailed documentation and project workflows can be found on my [GitHub Wiki](https://github.com/LehhitAbdel/java-opdracht/wiki).
 
 ---
 
