@@ -1,4 +1,4 @@
-# Art Student Stage Material Reservation System
+# EduReserve
 
 This project is a Spring-based web application developed in IntelliJ IDEA. The website enables art students to reserve stage materials for their final projects with ease and efficiency.
 
